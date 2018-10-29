@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dao.UserinfoDao">
+    <select id="getUserByUser" parameterType="cn.pojo.Userinfo" resultType="cn.pojo.Userinfo">
+        select * from userinfo
+        <trim prefix="where" prefixOverrides="and">
+            <if test="userId != null">
+                and userID=#{userId}
+            </if>
+            <if test="userName != null">
+                and userName=#{userName}
+            </if>
+            <if test="userPwd != null">
+                and userPWD=#{userPwd}
+            </if>
+        </trim>
+    </select>
+    <update id="updateUser" parameterType="cn.pojo.Userinfo">
+        update userinfo set userName=#{userName},userPWD=#{userPwd},userPhone=#{userPhone},
+                            userAddress=#{userAddress},userHobby=#{userHobby},sex=#{sex},userAdmin=#{userAdmin}
+        where userID=#{userId}
+    </update>
+    <select id="allUser" parameterType="int" resultType="cn.pojo.Userinfo">
+        select * from userinfo where userAdmin=#{userAdmin}
+    </select>
+</mapper>

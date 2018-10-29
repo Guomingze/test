@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dao.UsersDao">
+    <resultMap id="usersInfo" type="Users">
+        <result column="uid" property="uid"/>
+        <result column="uname" property="uname"/>
+        <result column="upassword" property="upassword"/>
+        <result column="usex" property="usex"/>
+        <result column="uphone" property="uphone"/>
+        <result column="udelivery" property="udelivery"/>
+        <result column="ubalance" property="ubalance"/>
+        <result column="ustate" property="ustate"/>
+        <result column="unumber" property="unumber"/>
+        <result column="u1" property="u1"/>
+        <result column="u2" property="u2"/>
+        <result column="u3" property="u3"/>
+        <collection property="sites" ofType="Site">
+            <result column="sid" property="sid"/>
+            <result column="suid" property="suid"/>
+            <result column="sphone" property="sphone"/>
+            <result column="saddress" property="saddress"/>
+            <result column="state" property="state"/>
+        </collection>
+    </resultMap>
+    <select id="getUserById" parameterType="int" resultMap="usersInfo">
+      select * from users,site where uid=suid and uid=#{uid}
+    </select>
+</mapper>

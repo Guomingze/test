@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dao.SiteDao">
+    <!--查询全部-->
+    <select id="allSite" resultType="cn.pojo.Site">
+        select * from site
+    </select>
+    <!--以对象属性查询-->
+    <select id="getSiteBySite" parameterType="cn.pojo.Site" resultType="cn.pojo.Site">
+        select * from site
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="sid != null">
+                and sid=#{sid}
+            </if>
+            <if test="suid != null">
+                and suid=#{suid}
+            </if>
+            <if test="sphone != null">
+                and sphone=#{sphone}
+            </if>
+            <if test="saddress != null">
+                and saddress=#{saddress}
+            </if>
+            <if test="state != null">
+                and state=#{state}
+            </if>
+        </trim>
+    </select>
+    <!--添加一条地址-->
+    <insert id="addSite" parameterType="Site">
+        insert into site values (#{sid},#{suid},#{sphone},#{saddress},#{state})
+    </insert>
+</mapper>

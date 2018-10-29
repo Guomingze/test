@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dao.SiteDao">
+    <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true"></cache>
+
+    <select id="getSiteCount" resultType="int">
+        select count(1) from site
+    </select>
+    <insert id="addSite" parameterType="Site">
+        insert into site values (#{sid},#{suid},#{sphone},#{saddress},#{state})
+    </insert>
+    <select id="allSite" resultType="Site">
+        select * from site
+    </select>
+    <update id="amendSite" parameterType="Site">
+        update site
+         <trim prefix="set" suffixOverrides="," suffix="where sid=#{sid}">
+             <if test="suid != 0">
+                 suid=#{suid},
+             </if>
+             <if test="sphone != null">
+                 sphone=#{sphone},
+             </if>
+             <if test="saddress != null">
+                 saddress=#{saddress},
+             </if>
+             <if test="state != 0">
+                 state=#{state},
+             </if>
+         </trim>
+    </update>
+    <select id="getSite" parameterType="Site" resultType="Site">
+        select * from  site
+        <trim prefix="where" suffixOverrides="and">
+            <if test="sid != 0">
+                sid=#{sid}  and
+            </if>
+            <if test="sphone != null">
+                sphone=#{sphone}  and
+            </if>
+            <if test="saddress != null">
+                saddress=#{saddress}  and
+            </if>
+        </trim>
+    </select>
+    <select id="getSiteBySids" parameterType="java.util.Map" resultType="cn.pojo.Site">
+        select * from site where suid=#{haha} and sid in
+        <foreach collection="hehe" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <select id="getSiteBySite" parameterType="cn.pojo.Site" resultType="cn.pojo.Site">
+        select * from site where
+        <choose>
+            <when test="sid != 0">
+                sid=#{sid}
+            </when>
+            <otherwise>
+                suid=#{suid}
+            </otherwise>
+        </choose>
+    </select>
+</mapper>
